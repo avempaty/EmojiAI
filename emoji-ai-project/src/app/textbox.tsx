@@ -1,5 +1,5 @@
 "use client"
-import { useState, useEffect, ChangeEvent } from "react"
+import { useState, useEffect, FormEvent } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ChatGPT } from "@/pages/apis/chatGPT"
@@ -27,13 +27,13 @@ const TextBox = () => {
     setEmojis(['😀', '😂', '🤔', '👍', '❤️', '🎉'])
   }, [])
 
-  const handleInputChange = async (e: ChangeEvent<HTMLInputElement>) => {
-    setInputText(e.target.value)
+  const handleSubmit = async (e: FormEvent) => {
+    //setInputText(inputText)
     try {
-      let res = await chatGPT.enhanceEmojiExperience(e.target.value)
+      let res = await chatGPT.enhanceEmojiExperience(inputText)
       setSuggestions(res)
     } catch (error) {
-
+      console.error("Error:", error)
     }
     //const filtered = emojis.filter(emoji => emoji.char.includes(e.target.value))
   }
@@ -43,13 +43,21 @@ const TextBox = () => {
   }
   return (
     <div className="p-4">
-      <Input
-        type="text"
-        value={inputText}
-        onChange={handleInputChange}
-        placeholder="Type here..."
-        className="mb-4"
-      />
+      <div className="flex flex-row gap-2 mb-4">
+        <Input
+          type="text"
+          value={inputText}
+          onChange={(e) => setInputText(e.target.value)}
+          placeholder="Type here..."
+          className="mb-4"
+        />
+        <Button
+          onClick={handleSubmit}
+          title="submit"
+        >
+          Submit
+        </Button>
+      </div>
       <div className="flex flex-wrap gap-2 mb-4">
         {emojis.map((emoji, index) => (
           <Button

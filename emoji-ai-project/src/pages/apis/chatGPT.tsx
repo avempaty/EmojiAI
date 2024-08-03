@@ -1,4 +1,3 @@
-import ApiClient from "simple-api-client"
 import OpenAI from "openai"
 //Temporary API KEY right here
 const NEXT_PUBLIC_OPENAI_API_KEY = ''
@@ -11,7 +10,7 @@ export class ChatGPT {
 
     async enhanceEmojiExperience(currentContext: string) {
         const stream = await this.openai.chat.completions.create({
-            model: "gpt-3.5-turbo-0125",
+            model: "gpt-4o-mini",
             messages: [{
                 role: "user", content: `Can you take this sentence and 
             give me better emoji suggestions? Sentence: ${currentContext}`
